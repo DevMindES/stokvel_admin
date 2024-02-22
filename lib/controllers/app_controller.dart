@@ -1,49 +1,124 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stokvel_admin/utils/theme_data.dart';
-import 'package:stokvel_admin/utils/utils.dart';
+
+import '../pages/dashboard/dashboard.dart';
+import '../pages/member_management/member_management.dart';
+import '../pages/message_board/message_board.dart';
+import '../pages/stokvel_management/stokvel_management.dart';
+import '../utils/routes.dart';
+import '../utils/utils.dart';
+
 
 class AppController extends GetxController
 {
   static AppController instance = Get.find();
 
-  double? _screenHeight;
-  double? _screenWidth;
-  double? _widgetWidth;
+  // CLASS VARIABLES
 
-  static const double _mediumScreenWidth = 641.0;
-  // static const double _smallScreenWidth = 376.0;
+  // widget data
+  final double _neuBoxDistance = 5.0;
 
-  void setWidgetWidth({
-    required double screenHeight,
-    required double screenWidth,
-  })
-  {
-    _screenHeight = screenHeight;
-    _screenWidth = screenWidth;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
-    if (_screenWidth! < _mediumScreenWidth) {
-      _widgetWidth = 0.80 * _screenWidth!;
-    } else {
-      _widgetWidth = _mediumScreenWidth;
+  // menu controls
+  var activeItem = dashBoardPageName.obs;
+  var hoverItem = "".obs;
+
+
+  // ROUTING
+  Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case dashBoardPageRoute:
+        return _getPageRoute(const DashBoard());
+      case memberManagementPageRoute:
+        return _getPageRoute(const MemberManagement());
+      case messageBoardPageRoute:
+        return _getPageRoute(const MessageBoard());
+      case stokvelManagementPageName:
+        return _getPageRoute(const StokvelManagement());
+      default:
+        return _getPageRoute(const DashBoard());
     }
   }
 
-  double getScreenHeight() => _screenHeight!;
-  double getWidgetWidth() => _widgetWidth!;
+  PageRoute _getPageRoute(Widget child) {
+    return MaterialPageRoute(builder: (context) => child);
+  }
 
 
-  // TEXTFORM FIELD
+  // NAVIGATION
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  Future<dynamic> navigateTo(String routeName) => navigatorKey.currentState!.pushNamed(routeName);
+
+  goBack() => navigatorKey.currentState?.pop();
+
+  Navigator localNavigator() => Navigator(
+    key: navigatorKey,
+    onGenerateRoute: generateRoute,
+    initialRoute: dashBoardPageRoute,
+  );
+
+
+  // MENU CONTROLLS
+  changeActiveItemTo(String itemName) => activeItem.value = itemName;
+
+  onHover(String itemName) {
+    if (!isActive(itemName)) hoverItem.value = itemName;
+  }
+
+  isHovering(String itemName) => hoverItem.value == itemName;
+
+  isActive(String itemName) => activeItem.value == itemName;
+
+  Widget returnIconFor(String itemName) {
+    switch (itemName) {
+      case dashBoardPageName:
+        return _customIcon(Icons.trending_up, itemName);
+      case memberManagementPageName:
+        return _customIcon(Icons.people_alt_outlined, itemName);
+      case messageBoardPageName:
+        return _customIcon(Icons.messenger_outline_rounded, itemName);
+      case stokvelManagementPageName:
+        return _customIcon(Icons.people, itemName);
+      default:
+        return _customIcon(Icons.exit_to_app, itemName);
+    }
+  }
+
+  Widget _customIcon(IconData icon, String itemName) {
+    if (isActive(itemName)) return Icon(
+      icon, 
+      size: 22, 
+      color: light_fonts_grey
+    );
+
+    return Icon(
+      icon,
+      size: 22,
+      color: isHovering(itemName) 
+        ? white 
+        : light_fonts_grey,
+    );
+  }
+
+
+  //  WIDGETS
+
   Widget formDataField({
     required TextEditingController fieldController,
     required String lableText,
-    required TextInputType textInputType
+    required TextInputType textInputType,
   }) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-          width: _widgetWidth,
+          // width: _widgetWidth,
           decoration: BoxDecoration(
             color: Colors.white, //.withOpacity(0.1),
             borderRadius: BorderRadius.circular(10)
@@ -54,14 +129,12 @@ class AppController extends GetxController
               return null;
             },
             controller: fieldController,
-            style: const TextStyle(
-              fontSize: h3,
-              color: dark_fonts_grey
-            ),
+            style: contentTextStyle(),
             decoration: InputDecoration(
               labelText: lableText,
-              labelStyle: const TextStyle(
-                color: dark_fonts_grey
+              labelStyle: contentTextStyle(
+                fontColor: primary_blue,
+                fontSize: h4
               ),
             ),
             keyboardType: textInputType,
@@ -71,36 +144,42 @@ class AppController extends GetxController
   }
 
   Widget neuBox({
-    required VoidCallback onTap,
-    required double? width,
+    VoidCallback? onTap,
+    Color? color,
+    EdgeInsets? edgeInsets,
     required Widget child,
   }) {
-    const double distance = 5.0;
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap ?? () {},
       child: Container(
-        width: width ?? _widgetWidth!,
         decoration: BoxDecoration(
-          color: primary_blue,
+          color: color ?? primary_blue,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             // lighter shdow on top left
-            const BoxShadow(
+            BoxShadow(
               color: Colors.white,
-              offset: Offset(-distance, -distance),
+              offset: Offset(-_neuBoxDistance, -_neuBoxDistance),
               blurRadius: 8.0,
             ),
             // darker shdow on bottom right
             BoxShadow(
               color: Colors.grey.shade400,
-              offset: const Offset(distance, distance),
+              offset: Offset(_neuBoxDistance, _neuBoxDistance),
               blurRadius: 6.0
             ),
           ]
         ),
-        padding: const EdgeInsets.all(12.0),
+        padding: edgeInsets ?? const EdgeInsets.all(12.0),
         child: child,
       ),
     );
   }
+
+  void controlMenu() {
+    if (!_scaffoldKey.currentState!.isDrawerOpen) {
+      _scaffoldKey.currentState!.openDrawer();
+    }
+  }
+
 }

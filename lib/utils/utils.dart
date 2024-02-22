@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stokvel_admin/utils/theme_data.dart';
+import 'package:stokvel_admin/widgets/responsive.dart';
 
 // double textfieldWidth = 310.0;
 const double h1 = 30.0;
@@ -25,10 +26,108 @@ TextStyle contentTextStyle({
 }
 
 // APPBAR
-AppBar appBar() => AppBar(
-    elevation: 0.0,
-    backgroundColor: offwhite_background,
-  );
+AppBar appBar({required BuildContext context, required GlobalKey<ScaffoldState> key}) {
+  return AppBar(
+      leading: Responsive.isDesktop(context)
+          ? Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Image.asset(
+                    "assets/icons/funding.png",
+                    width: 28,
+                  ),
+                ),
+              ],
+            )
+          : IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => key.currentState?.openDrawer()
+            ),
+      title: Row(
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: Text(
+                'Stokvel Admin',
+                style: contentTextStyle(
+                  fontSize: h1,
+                  fontWeight: FontWeight.bold
+                )
+              )
+          ),
+          Expanded(child: Container()),
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: dark_fonts_grey,
+            ),
+            onPressed: () {}
+          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.notifications,
+                  color: dark_fonts_grey.withOpacity(.7),
+                ),
+                onPressed: () {}
+              ),
+              Positioned(
+                top: 7,
+                right: 7,
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: primary_blue,
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white, width: 2)
+                  ),
+                ),
+              )
+            ],
+          ),
+          Container(
+            width: 1,
+            height: 22,
+            color: Colors.white,
+          ),
+          const SizedBox(width: 24),
+          Text(
+            'Admin',
+            style: contentTextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 16),
+          Container(
+            decoration: BoxDecoration(
+                color: primary_blue.withOpacity(.5),
+                borderRadius: BorderRadius.circular(30)
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(30)
+              ),
+              padding: const EdgeInsets.all(2),
+              margin: const EdgeInsets.all(2),
+              child: const CircleAvatar(
+                backgroundColor: white,
+                child: Icon(
+                  Icons.person_outline,
+                  color: dark_fonts_grey,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+      iconTheme: const IconThemeData(color: dark_fonts_grey),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+    );
+}
   
 
 // CIRCULAR PROGRESS INDICATOR
