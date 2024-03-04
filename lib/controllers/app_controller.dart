@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stokvel_admin/pages/member_management/add_member_page.dart';
+import 'package:stokvel_admin/pages/member_management/review_member.dart';
+import 'package:stokvel_admin/pages/message_board/view_all_messages.dart';
 import 'package:stokvel_admin/utils/theme_data.dart';
 
 import '../pages/dashboard/dashboard.dart';
@@ -36,8 +39,14 @@ class AppController extends GetxController
         return _getPageRoute(const DashBoard());
       case memberManagementPageRoute:
         return _getPageRoute(const MemberManagement());
+      case addMemberPageRoute:
+        return _getPageRoute(const AddMemberPage());
+      case reviewMemberPageRoute:
+        return _getPageRoute(const ReviewMember());
       case messageBoardPageRoute:
         return _getPageRoute(const MessageBoard());
+      case allMessagesPageRoute:
+        return _getPageRoute(const ViewAllMessagesPage());
       case stokvelManagementPageName:
         return _getPageRoute(const StokvelManagement());
       default:
