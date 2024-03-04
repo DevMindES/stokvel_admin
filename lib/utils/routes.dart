@@ -1,3 +1,5 @@
+import 'package:stokvel_admin/pages/member_management/add_member_page.dart';
+
 const rootRoute = "/";
 
 const dashBoardPageName = "DashBoard";
@@ -6,8 +8,14 @@ const dashBoardPageRoute = "/dashboard";
 const memberManagementPageName = "MemberManagement";
 const memberManagementPageRoute = "/membermanagement";
 
+const addMemberPageRoute = '/addmember';
+
+const reviewMemberPageRoute = '/reviewmember';
+
 const messageBoardPageName = "MessageBoard";
 const messageBoardPageRoute = "/messageboard";
+
+const allMessagesPageRoute = '/viewallmessages';
 
 const stokvelManagementPageName = "StokvelManagement";
 const stokvelManagementPageRoute = "/stokvelmanagement";
