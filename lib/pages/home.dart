@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stokvel_admin/utils/utils.dart';
 import '../controllers/app_controller.dart';
+import '../init_packages.dart';
 import '../layout/desktop/desktop.dart';
 import '../layout/mobile/mobile.dart';
 import '../layout/tablet/tablet.dart';
@@ -15,8 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final appController = AppController.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

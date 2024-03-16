@@ -4,6 +4,11 @@ import 'package:get/get.dart';
 import 'package:stokvel_admin/utils/theme_data.dart';
 import 'package:stokvel_admin/widgets/responsive.dart';
 
+// screen sizes
+const double largeScreenWidth = 1100.0;
+const double mediumScreenWidth = 770.0;
+const double smallScreenWidth = 650.0;
+
 // double textfieldWidth = 310.0;
 const double h1 = 30.0;
 const double h2 = 22.0;
@@ -13,6 +18,7 @@ const double h4 = 12.0;
 Widget spacer1() => const SizedBox(height: 50.0);
 Widget spacer2() => const SizedBox(height: 30.0);
 Widget spacer3() => const SizedBox(height: 10.0);
+const double pad = 10.0;
 
 TextStyle contentTextStyle({
   double fontSize = h3,
@@ -22,6 +28,14 @@ TextStyle contentTextStyle({
     fontSize: fontSize,
     fontWeight: fontWeight,
     color: fontColor
+  );
+}
+
+TextStyle smallButtonsTextStyle() {
+  return const TextStyle(
+    fontSize: h4,
+    color: white,
+    fontWeight: FontWeight.bold
   );
 }
 
@@ -131,44 +145,6 @@ AppBar appBar({required BuildContext context, required GlobalKey<ScaffoldState> 
   
 
 // CIRCULAR PROGRESS INDICATOR
-Future<void> showCircularProgressIndicator({required BuildContext context}) async => showDialog(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (context) {
-        return const AlertDialog(
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: dark_fonts_grey,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      'Please wait...',
-                      style: TextStyle(
-                        color: dark_fonts_grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: h2
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          backgroundColor: Colors.white,
-        );
-      },
-    );
-
-
 Future<void> getCircularProgressIndicator() async
 {
   return Get.defaultDialog(
@@ -190,6 +166,45 @@ Future<void> getCircularProgressIndicator() async
   );
 }
 
+Column retrievingData({String? message}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const Center(child: CircularProgressIndicator()),
+      spacer2(),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          message ?? 'Retrieving data...',
+          textAlign: TextAlign.center,
+          style: contentTextStyle(
+            fontColor: primary_blue,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+      )
+    ],
+  );
+}
+
+// widget width
+double widgetWidth(BuildContext context) {
+
+  final screenWidth = MediaQuery.of(context).size.width;
+
+  if (screenWidth <= mediumScreenWidth) return screenWidth * 0.90;
+
+  return mediumScreenWidth;
+}
+
+// horizontal symmetric padding
+double hsp(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
+
+  if (screenWidth <= mediumScreenWidth) return screenWidth * 0.10;
+
+  return screenWidth - mediumScreenWidth;
+}
 
 // G E T    D I A L O G S
 const double borderRadius = 8.0;

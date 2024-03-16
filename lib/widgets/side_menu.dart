@@ -27,7 +27,7 @@ class _SideMenuState extends State<SideMenu> {
       backgroundColor: primary_blue,
       child: ListView(
         children: [
-          if(Responsive.isMobile(context)) Column(
+          if (Responsive.isMobile(context)) Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 40),
@@ -55,9 +55,9 @@ class _SideMenuState extends State<SideMenu> {
                 ],
               ),
               const SizedBox(height: 30),
+              const Divider(color: white),
             ],
           ),
-          const Divider(color: white),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: sideMenuItemRoutes.map((item) => SideMenuItem(
@@ -78,63 +78,5 @@ class _SideMenuState extends State<SideMenu> {
         ],
       ),
     );
-    // return Drawer(
-    //   backgroundColor: primary_blue,
-    //   child: 
-    
-
-
-      // child: ListView(
-      //   children: [
-      //     const DrawerHeader(
-      //       child: CircleAvatar(),
-      //     ),
-      //     ListTile(
-      //       onTap: () {},
-      //       leading: const Icon(Icons.apps, color: Colors.white),
-      //       title: const Text(
-      //         'Dashboard',
-      //         style: TextStyle(
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       horizontalTitleGap: 0,
-      //     ),
-      //     ListTile(
-      //       onTap: () {},
-      //       leading: const Icon(Icons.chat, color: Colors.white),
-      //       title: const Text(
-      //         'Chats',
-      //         style: TextStyle(
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       horizontalTitleGap: 0,
-      //     ),
-      //     ListTile(
-      //       onTap: () {},
-      //       leading: const Icon(Icons.mail, color: Colors.white),
-      //       title: const Text(
-      //         'Email',
-      //         style: TextStyle(
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       horizontalTitleGap: 0,
-      //     ),
-      //     ListTile(
-      //       onTap: () {},
-      //       leading: const Icon(Icons.settings, color: Colors.white),
-      //       title: const Text(
-      //         'Settings',
-      //         style: TextStyle(
-      //           color: Colors.white,
-      //         ),
-      //       ),
-      //       horizontalTitleGap: 0,
-      //     ),
-      //   ],
-      // ),
-    // );
   }
 }

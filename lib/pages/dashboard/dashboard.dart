@@ -33,7 +33,7 @@ class _DashBoardState extends State<DashBoard>
           ],
         )),
         Expanded(
-          child: ListView(
+          child: Column(
             children: [
               if (!Responsive.isMobile(context)) const RevenueSectionLarge() else const RevenueSectionSmall(),
               // const AvailableDriversTable(),

@@ -1,15 +1,15 @@
 const rootRoute = "/";
 
-const dashBoardPageName = "DashBoard";
+const dashBoardPageName = "Dash Board";
 const dashBoardPageRoute = "/dashboard";
 
-const memberManagementPageName = "MemberManagement";
+const memberManagementPageName = "Member Management";
 const memberManagementPageRoute = "/membermanagement";
 
-const messageBoardPageName = "MessageBoard";
+const messageBoardPageName = "Message Board";
 const messageBoardPageRoute = "/messageboard";
 
-const stokvelManagementPageName = "StokvelManagement";
+const stokvelManagementPageName = "Stokvel Management";
 const stokvelManagementPageRoute = "/stokvelmanagement";
 
 const loginPageName = "Login";

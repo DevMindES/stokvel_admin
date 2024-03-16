@@ -27,7 +27,7 @@ class AppController extends GetxController
   // menu controls
   var activeItem = dashBoardPageName.obs;
   var hoverItem = "".obs;
-
+  
 
   // ROUTING
   Route<dynamic> generateRoute(RouteSettings settings) {
@@ -113,34 +113,32 @@ class AppController extends GetxController
     required TextEditingController fieldController,
     required String lableText,
     required TextInputType textInputType,
+    required double width
   }) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-          // width: _widgetWidth,
-          decoration: BoxDecoration(
-            color: Colors.white, //.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(10)
-          ),
-          child: TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {return 'Please enter some text';}
-              return null;
-            },
-            controller: fieldController,
-            style: contentTextStyle(),
-            decoration: InputDecoration(
-              labelText: lableText,
-              labelStyle: contentTextStyle(
-                fontColor: primary_blue,
-                fontSize: h4
-              ),
-            ),
-            keyboardType: textInputType,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+      width: width,
+      decoration: BoxDecoration(
+        color: Colors.white, //.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {return 'Please enter some text';}
+          return null;
+        },
+        controller: fieldController,
+        style: contentTextStyle(),
+        decoration: InputDecoration(
+          labelText: lableText,
+          labelStyle: contentTextStyle(
+            fontColor: primary_blue,
+            fontSize: h4
           ),
         ),
-      );
+        keyboardType: textInputType,
+      ),
+    );
   }
 
   Widget neuBox({
@@ -148,6 +146,7 @@ class AppController extends GetxController
     Color? color,
     EdgeInsets? edgeInsets,
     required Widget child,
+    required double width
   }) {
     return GestureDetector(
       onTap: onTap ?? () {},
@@ -171,7 +170,10 @@ class AppController extends GetxController
           ]
         ),
         padding: edgeInsets ?? const EdgeInsets.all(12.0),
-        child: child,
+        child: SizedBox(
+          width: width,
+          child: child
+        ),
       ),
     );
   }

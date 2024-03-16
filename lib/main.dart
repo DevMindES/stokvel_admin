@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stokvel_admin/firebase_options.dart';
 
 import 'controllers/app_controller.dart';
+import 'controllers/auth_controller.dart';
 import 'pages/page_not_found.dart';
 // import 'package:stokvel_admin/utils/theme_data.dart';
 
@@ -19,14 +21,14 @@ void main() async
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
   .then((firebaseApp) {
     Get.put(AppController());
-    // Get.put(AuthController());
+    Get.put(AuthController());
   });
 
-  // await FirebaseAppCheck.instance.activate(
-    // webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    // androidProvider: AndroidProvider.debug,
-    // appleProvider: AppleProvider.appAttest,
-  // );
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.appAttest,
+  );
   
   runApp(MyApp());
 }
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget
         colorScheme: ColorScheme.fromSeed(seedColor: primary_blue),
         useMaterial3: true,
       ),
-      initialRoute: rootRoute,
+      initialRoute: rootRoute, // /
       unknownRoute: GetPage(name: '/not-found', page: () => const PageNotFound(), transition: Transition.fadeIn),
         getPages: [
           GetPage(name: rootRoute, page: () => const Home()),
