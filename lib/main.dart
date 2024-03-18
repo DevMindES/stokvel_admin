@@ -2,6 +2,8 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stokvel_admin/controllers/member_management_controller.dart';
+import 'package:stokvel_admin/controllers/message_board_controller.dart';
 import 'package:stokvel_admin/pages/home.dart';
 import 'package:stokvel_admin/pages/login.dart';
 import 'package:stokvel_admin/utils/routes.dart';
@@ -22,6 +24,8 @@ void main() async
   .then((firebaseApp) {
     Get.put(AppController());
     Get.put(AuthController());
+    Get.put(MemberManagementController());
+    Get.put(MessageBoardController());
   });
 
   await FirebaseAppCheck.instance.activate(
